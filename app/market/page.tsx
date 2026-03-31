@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout'
-import { mockMarketSignals, mockDeals } from '@/lib/data'
+import { marketSignals, deals } from '@/lib/data'
 import { TrendingUp, Zap, BarChart3, AlertCircle } from 'lucide-react'
 
 const marketTrends = [
@@ -23,7 +23,7 @@ export default function MarketPage() {
       {/* Live signals */}
       <div className="section-label mb-4">LIVE MARKET SIGNALS — {new Date().toLocaleDateString()}</div>
       <div className="grid md:grid-cols-3 gap-4 mb-6">
-        {mockMarketSignals.map(sig => (
+        {marketSignals.map(sig => (
           <div
             key={sig.id}
             className="rounded-lg p-5"

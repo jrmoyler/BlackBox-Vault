@@ -1,14 +1,14 @@
 import Layout from '@/components/Layout'
 import StatCard from '@/components/StatCard'
 import DealCard from '@/components/DealCard'
-import { mockDeals, mockStats, mockMarketSignals } from '@/lib/data'
+import { deals, platformStats, marketSignals } from '@/lib/data'
 import { formatCurrency, stageLabel, stageColor } from '@/lib/utils'
 import { AlertTriangle, TrendingUp, Zap, ArrowRight, Activity } from 'lucide-react'
 import Link from 'next/link'
 
 export default function DashboardPage() {
-  const recentDeals = mockDeals.slice(0, 3)
-  const topDeal = [...mockDeals].sort((a, b) => b.bdcScore.overall - a.bdcScore.overall)[0]
+  const recentDeals = deals.slice(0, 3)
+  const topDeal = [...deals].sort((a, b) => b.bdcScore.overall - a.bdcScore.overall)[0]
 
   const layerFlow = [
     { id: 'L1', label: 'Project Sources', items: ['Energy Campuses', 'Cold Storage', 'WTE', 'AgriTech', 'Digital'] },
@@ -38,8 +38,8 @@ export default function DashboardPage() {
         <span style={{ color: 'var(--color-accent)' }}>BLACK BOX ONLINE</span>
         <span style={{ color: 'var(--color-text-muted)' }}>—</span>
         <span style={{ color: 'var(--color-text-secondary)' }}>
-          {mockDeals.length} active deals · {mockDeals.reduce((s, d) => s + d.documents.length, 0)} documents indexed ·{' '}
-          {mockMarketSignals.length} market signals detected
+          {deals.length} active deals · {deals.reduce((s, d) => s + d.documents.length, 0)} documents indexed ·{' '}
+          {marketSignals.length} market signals detected
         </span>
         <span className="ml-auto" style={{ color: 'var(--color-text-muted)' }}>
           VAULT INTEGRITY: 100%
@@ -48,10 +48,10 @@ export default function DashboardPage() {
 
       {/* Stats row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatCard label="TOTAL DEALS" value={mockStats.totalDeals} sub="Across all platforms" accent="cyan" delay={0} />
-        <StatCard label="TOTAL CAPITAL" value={formatCurrency(mockStats.totalCapital)} sub="Pipeline value" accent="amber" delay={80} />
-        <StatCard label="AVG BDC SCORE" value={mockStats.avgBdcScore} suffix="%" sub="Portfolio average" accent="green" delay={160} />
-        <StatCard label="LENDER READY" value={mockStats.dealsByStage.lender_ready} sub="Ready for capital raise" accent="cyan" delay={240} />
+        <StatCard label="TOTAL DEALS" value={platformStats.totalDeals} sub="Across all platforms" accent="cyan" delay={0} />
+        <StatCard label="TOTAL CAPITAL" value={formatCurrency(platformStats.totalCapital)} sub="Pipeline value" accent="amber" delay={80} />
+        <StatCard label="AVG BDC SCORE" value={platformStats.avgBdcScore} suffix="%" sub="Portfolio average" accent="green" delay={160} />
+        <StatCard label="LENDER READY" value={platformStats.dealsByStage.lender_ready} sub="Ready for capital raise" accent="cyan" delay={240} />
       </div>
 
       {/* Main 3-col grid */}
@@ -80,7 +80,7 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="space-y-3">
-            {mockMarketSignals.map((sig) => (
+            {marketSignals.map((sig) => (
               <div
                 key={sig.id}
                 className="rounded-lg p-4"
@@ -165,8 +165,8 @@ export default function DashboardPage() {
         <div className="rounded-lg p-5" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
           <div className="section-label mb-4">DEAL PIPELINE BY STAGE</div>
           <div className="space-y-3">
-            {(Object.entries(mockStats.dealsByStage) as [keyof typeof mockStats.dealsByStage, number][]).map(([stage, count]) => {
-              const pct = (count / mockStats.totalDeals) * 100
+            {(Object.entries(platformStats.dealsByStage) as [keyof typeof platformStats.dealsByStage, number][]).map(([stage, count]) => {
+              const pct = (count / platformStats.totalDeals) * 100
               return (
                 <div key={stage} className="flex items-center gap-3">
                   <span className={`tag ${stageColor(stage)}`} style={{ minWidth: 100, textAlign: 'center', fontSize: 9 }}>
@@ -191,7 +191,7 @@ export default function DashboardPage() {
         <div className="rounded-lg p-5" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
           <div className="section-label mb-4">ACTIVE RISK INDICATORS</div>
           <div className="space-y-2">
-            {mockDeals.flatMap(d => d.riskIndicators.map(r => ({ deal: d.projectName, risk: r }))).slice(0, 5).map((item, i) => (
+            {deals.flatMap(d => d.riskIndicators.map(r => ({ deal: d.projectName, risk: r }))).slice(0, 5).map((item, i) => (
               <div key={i} className="flex items-start gap-2">
                 <AlertTriangle size={12} className="text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>

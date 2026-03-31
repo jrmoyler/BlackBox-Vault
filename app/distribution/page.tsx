@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { formatCurrency, platformColor } from '@/lib/utils'
 import Link from 'next/link'
 import { ArrowRight, Zap } from 'lucide-react'
@@ -68,7 +68,7 @@ export default function DistributionPage() {
           <div className="grid grid-cols-2 gap-3">
             {platforms.map(p => {
               const detail = platformDetails[p]
-              const dealCount = mockDeals.filter(d => d.platformDistribution.includes(p)).length
+              const dealCount = deals.filter(d => d.platformDistribution.includes(p)).length
               return (
                 <div
                   key={p}
@@ -93,7 +93,7 @@ export default function DistributionPage() {
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         {platforms.map(platform => {
           const detail = platformDetails[platform]
-          const platformDeals = mockDeals.filter(d => d.platformDistribution.includes(platform))
+          const platformDeals = deals.filter(d => d.platformDistribution.includes(platform))
           const totalCapital = platformDeals.reduce((s, d) => s + d.capitalRequirement, 0)
 
           return (
@@ -167,7 +167,7 @@ export default function DistributionPage() {
               </tr>
             </thead>
             <tbody>
-              {mockDeals.map(deal => (
+              {deals.map(deal => (
                 <tr key={deal.id} className="hover:bg-white/3 transition-colors" style={{ borderBottom: '1px solid var(--color-border)' }}>
                   <td className="px-5 py-3">
                     <Link href={`/vault/${deal.id}`} className="text-sm font-semibold hover:underline" style={{ fontFamily: 'Syne, sans-serif', color: 'var(--color-text-primary)' }}>

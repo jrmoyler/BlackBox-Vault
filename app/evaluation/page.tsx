@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import ScoreBar from '@/components/ScoreBar'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { formatCurrency, stageLabel, stageColor, scoreColor } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -38,14 +38,14 @@ const evalCategories = [
 ]
 
 export default function EvaluationPage() {
-  const sortedDeals = [...mockDeals].sort((a, b) => b.bdcScore.overall - a.bdcScore.overall)
+  const sortedDeals = [...deals].sort((a, b) => b.bdcScore.overall - a.bdcScore.overall)
   const avgScores = {
-    projectViability: Math.round(mockDeals.reduce((s, d) => s + d.bdcScore.projectViability, 0) / mockDeals.length),
-    marketStrength: Math.round(mockDeals.reduce((s, d) => s + d.bdcScore.marketStrength, 0) / mockDeals.length),
-    capitalReadiness: Math.round(mockDeals.reduce((s, d) => s + d.bdcScore.capitalReadiness, 0) / mockDeals.length),
-    technologyIntegration: Math.round(mockDeals.reduce((s, d) => s + d.bdcScore.technologyIntegration, 0) / mockDeals.length),
-    strategicAlignment: Math.round(mockDeals.reduce((s, d) => s + d.bdcScore.strategicAlignment, 0) / mockDeals.length),
-    overall: Math.round(mockDeals.reduce((s, d) => s + d.bdcScore.overall, 0) / mockDeals.length),
+    projectViability: Math.round(deals.reduce((s, d) => s + d.bdcScore.projectViability, 0) / deals.length),
+    marketStrength: Math.round(deals.reduce((s, d) => s + d.bdcScore.marketStrength, 0) / deals.length),
+    capitalReadiness: Math.round(deals.reduce((s, d) => s + d.bdcScore.capitalReadiness, 0) / deals.length),
+    technologyIntegration: Math.round(deals.reduce((s, d) => s + d.bdcScore.technologyIntegration, 0) / deals.length),
+    strategicAlignment: Math.round(deals.reduce((s, d) => s + d.bdcScore.strategicAlignment, 0) / deals.length),
+    overall: Math.round(deals.reduce((s, d) => s + d.bdcScore.overall, 0) / deals.length),
   }
 
   return (
@@ -57,7 +57,7 @@ export default function EvaluationPage() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-cyan-400 data-pulse" />
             <span className="text-xs" style={{ color: 'var(--color-text-muted)', fontFamily: 'JetBrains Mono, monospace', fontSize: 10 }}>
-              {mockDeals.length} DEALS ANALYZED
+              {deals.length} DEALS ANALYZED
             </span>
           </div>
         </div>

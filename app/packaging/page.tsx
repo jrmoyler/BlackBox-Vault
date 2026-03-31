@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Layout from '@/components/Layout'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { formatCurrency, stageLabel, stageColor, scoreColor } from '@/lib/utils'
 import { FileText, Download, CheckCircle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
@@ -20,7 +20,7 @@ export default function PackagingPage() {
     setGenerated(prev => new Set([...prev, key]))
   }
 
-  const eligibleDeals = mockDeals.filter(d => d.bdcScore.overall >= 70)
+  const eligibleDeals = deals.filter(d => d.bdcScore.overall >= 70)
 
   const packageTypes = [
     {

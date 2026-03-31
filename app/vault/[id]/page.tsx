@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation'
 import Layout from '@/components/Layout'
 import ScoreBar from '@/components/ScoreBar'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { formatCurrency, stageLabel, stageColor, typeLabel, platformColor } from '@/lib/utils'
 import { FileText, MapPin, User, AlertTriangle, ArrowRight, CheckCircle, Link2 } from 'lucide-react'
 
 export default async function DealPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const deal = mockDeals.find(d => d.id === id)
+  const deal = deals.find(d => d.id === id)
   if (!deal) notFound()
 
   const docTypeColor: Record<string, string> = {
