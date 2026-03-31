@@ -1,17 +1,17 @@
 import Layout from '@/components/Layout'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { formatCurrency, stageColor, stageLabel } from '@/lib/utils'
 import Link from 'next/link'
 
 export default function CapitalPage() {
-  const totalEquity = mockDeals.reduce((s, d) => s + d.capitalStack.equity, 0)
-  const totalDebt = mockDeals.reduce((s, d) => s + d.capitalStack.debt, 0)
-  const totalIncentives = mockDeals.reduce((s, d) => s + d.capitalStack.incentives, 0)
+  const totalEquity = deals.reduce((s, d) => s + d.capitalStack.equity, 0)
+  const totalDebt = deals.reduce((s, d) => s + d.capitalStack.debt, 0)
+  const totalIncentives = deals.reduce((s, d) => s + d.capitalStack.incentives, 0)
   const totalCapital = totalEquity + totalDebt + totalIncentives
 
-  const investorTypes = [...new Set(mockDeals.flatMap(d => d.capitalStack.investorTypes))]
-  const incentiveTypes = [...new Set(mockDeals.flatMap(d => d.capitalStack.incentiveTypes))]
-  const debtTypes = [...new Set(mockDeals.flatMap(d => d.capitalStack.debtStructure))]
+  const investorTypes = [...new Set(deals.flatMap(d => d.capitalStack.investorTypes))]
+  const incentiveTypes = [...new Set(deals.flatMap(d => d.capitalStack.incentiveTypes))]
+  const debtTypes = [...new Set(deals.flatMap(d => d.capitalStack.debtStructure))]
 
   return (
     <Layout title="Capital Stack Engine" subtitle="Debt structuring, tax credit integration, infrastructure finance modeling">
@@ -132,7 +132,7 @@ export default function CapitalPage() {
               </tr>
             </thead>
             <tbody>
-              {mockDeals.map(deal => (
+              {deals.map(deal => (
                 <tr key={deal.id} className="hover:bg-white/3 transition-colors" style={{ borderBottom: '1px solid var(--color-border)' }}>
                   <td className="px-4 py-3">
                     <Link href={`/vault/${deal.id}`} className="text-sm font-semibold hover:underline" style={{ fontFamily: 'Syne, sans-serif', color: 'var(--color-text-primary)' }}>

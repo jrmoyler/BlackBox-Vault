@@ -1,6 +1,6 @@
 import type { Deal, MarketSignal, PlatformStats } from '@/types'
 
-export const mockDeals: Deal[] = [
+export const deals: Deal[] = [
   {
     id: 'deal-001',
     projectName: 'Gulf Coast Cold Storage Campus',
@@ -270,7 +270,7 @@ export const mockDeals: Deal[] = [
   },
 ]
 
-export const mockMarketSignals: MarketSignal[] = [
+export const marketSignals: MarketSignal[] = [
   {
     id: 'sig-001',
     sector: 'Cold Storage Infrastructure',
@@ -303,27 +303,40 @@ export const mockMarketSignals: MarketSignal[] = [
   },
 ]
 
-export const mockStats: PlatformStats = {
-  totalDeals: 5,
-  totalCapital: 334000000,
-  avgBdcScore: 81,
-  dealsByStage: {
-    early_stage: 1,
-    structurable: 2,
-    capital_ready: 1,
-    lender_ready: 1,
+export const platformStats: PlatformStats = deals.reduce<PlatformStats>(
+  (acc, deal) => {
+    acc.totalDeals += 1
+    acc.totalCapital += deal.capitalRequirement
+    acc.avgBdcScore += deal.bdcScore.overall
+    acc.dealsByStage[deal.stage] += 1
+    acc.dealsByType[deal.projectType] = (acc.dealsByType[deal.projectType] ?? 0) + 1
+
+    deal.platformDistribution.forEach((platform) => {
+      acc.capitalByPlatform[platform] += deal.capitalRequirement
+    })
+
+    return acc
   },
-  dealsByType: {
-    cold_storage: 1,
-    energy_campus: 1,
-    agriculture: 1,
-    digital_infrastructure: 1,
-    waste_to_energy: 1,
-  },
-  capitalByPlatform: {
-    BDC: 334000000,
-    GDG: 262000000,
-    RRG: 178000000,
-    EnerGenius: 245000000,
-  },
-}
+  {
+    totalDeals: 0,
+    totalCapital: 0,
+    avgBdcScore: 0,
+    dealsByStage: {
+      early_stage: 0,
+      structurable: 0,
+      capital_ready: 0,
+      lender_ready: 0,
+    },
+    dealsByType: {},
+    capitalByPlatform: {
+      BDC: 0,
+      GDG: 0,
+      RRG: 0,
+      EnerGenius: 0,
+    },
+  }
+)
+
+platformStats.avgBdcScore = platformStats.totalDeals
+  ? Math.round(platformStats.avgBdcScore / platformStats.totalDeals)
+  : 0

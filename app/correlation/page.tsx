@@ -1,12 +1,12 @@
 import Layout from '@/components/Layout'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { typeLabel } from '@/lib/utils'
 import Link from 'next/link'
 import { Link2, Zap, TrendingUp } from 'lucide-react'
 
 export default function CorrelationPage() {
   // Build correlation pairs
-  const allCorrelations = mockDeals.flatMap(deal =>
+  const allCorrelations = deals.flatMap(deal =>
     deal.correlations.map(c => ({
       sourceId: deal.id,
       sourceName: deal.projectName,
@@ -29,8 +29,8 @@ export default function CorrelationPage() {
   })
 
   // Cross-platform opportunities (deals sharing platforms)
-  const sharedPlatformPairs = mockDeals.flatMap((deal, i) =>
-    mockDeals.slice(i + 1).flatMap(other => {
+  const sharedPlatformPairs = deals.flatMap((deal, i) =>
+    deals.slice(i + 1).flatMap(other => {
       const shared = deal.platformDistribution.filter(p => other.platformDistribution.includes(p))
       if (shared.length >= 2) {
         return [{ deal1: deal, deal2: other, sharedPlatforms: shared }]
@@ -40,11 +40,11 @@ export default function CorrelationPage() {
   )
 
   // DNA pattern detection
-  const ozDeals = mockDeals.filter(d => d.dna.ozEligible)
-  const microGridDeals = mockDeals.filter(d => d.dna.technology.includes('microgrid'))
+  const ozDeals = deals.filter(d => d.dna.ozEligible)
+  const microGridDeals = deals.filter(d => d.dna.technology.includes('microgrid'))
   const patterns = [
-    { label: 'Microgrid + Cold Storage + Rural OZ', deals: mockDeals.filter(d => d.dna.technology.includes('microgrid') && d.dna.ozEligible), successRate: 84, note: 'High infrastructure financing success rate' },
-    { label: 'SmartConnect + Energy Campus', deals: mockDeals.filter(d => d.dna.technology.includes('smart_connect')), successRate: 91, note: 'Technology integration premium in BDC scoring' },
+    { label: 'Microgrid + Cold Storage + Rural OZ', deals: deals.filter(d => d.dna.technology.includes('microgrid') && d.dna.ozEligible), successRate: 84, note: 'High infrastructure financing success rate' },
+    { label: 'SmartConnect + Energy Campus', deals: deals.filter(d => d.dna.technology.includes('smart_connect')), successRate: 91, note: 'Technology integration premium in BDC scoring' },
     { label: 'Opportunity Zone + Infrastructure Debt', deals: ozDeals, successRate: 78, note: 'Blended capital stack with strong investor appetite' },
   ]
 

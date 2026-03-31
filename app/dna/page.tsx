@@ -1,14 +1,14 @@
 import Layout from '@/components/Layout'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import Link from 'next/link'
 
 export default function DNAPage() {
-  const sectors = [...new Set(mockDeals.map(d => d.dna.sector))]
-  const technologies = [...new Set(mockDeals.flatMap(d => d.dna.technology))]
-  const capitalTypes = [...new Set(mockDeals.flatMap(d => d.dna.capitalStack))]
-  const geographies = [...new Set(mockDeals.map(d => d.dna.geography))]
+  const sectors = [...new Set(deals.map(d => d.dna.sector))]
+  const technologies = [...new Set(deals.flatMap(d => d.dna.technology))]
+  const capitalTypes = [...new Set(deals.flatMap(d => d.dna.capitalStack))]
+  const geographies = [...new Set(deals.map(d => d.dna.geography))]
 
-  const ozDeals = mockDeals.filter(d => d.dna.ozEligible)
+  const ozDeals = deals.filter(d => d.dna.ozEligible)
 
   return (
     <Layout title="Deal DNA System" subtitle="Sector, technology, capital, and geography classification">
@@ -17,8 +17,8 @@ export default function DNAPage() {
         <div className="rounded-lg p-5" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
           <div className="section-label mb-4">SECTOR CLASSIFICATION</div>
           {sectors.map(sector => {
-            const sectorDeals = mockDeals.filter(d => d.dna.sector === sector)
-            const pct = (sectorDeals.length / mockDeals.length) * 100
+            const sectorDeals = deals.filter(d => d.dna.sector === sector)
+            const pct = (sectorDeals.length / deals.length) * 100
             return (
               <div key={sector} className="mb-4">
                 <div className="flex items-center justify-between mb-1.5">
@@ -47,13 +47,13 @@ export default function DNAPage() {
           <div className="section-label mb-4">TECHNOLOGY CLASSIFICATION</div>
           <div className="space-y-3">
             {technologies.map(tech => {
-              const techDeals = mockDeals.filter(d => d.dna.technology.includes(tech))
+              const techDeals = deals.filter(d => d.dna.technology.includes(tech))
               return (
                 <div key={tech} className="p-3 rounded" style={{ background: 'var(--color-surface-high)', border: '1px solid var(--color-border)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold" style={{ fontFamily: 'JetBrains Mono, monospace', color: '#A78BFA' }}>{tech.replace('_', ' ').toUpperCase()}</span>
                     <span className="text-xs" style={{ fontFamily: 'JetBrains Mono, monospace', color: 'var(--color-text-muted)', fontSize: 10 }}>
-                      {techDeals.length}/{mockDeals.length} deals
+                      {techDeals.length}/{deals.length} deals
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1">
@@ -78,7 +78,7 @@ export default function DNAPage() {
           <div className="section-label mb-4">CAPITAL STACK DNA</div>
           <div className="space-y-2">
             {capitalTypes.map(cap => {
-              const capDeals = mockDeals.filter(d => d.dna.capitalStack.includes(cap))
+              const capDeals = deals.filter(d => d.dna.capitalStack.includes(cap))
               return (
                 <div key={cap} className="flex items-center justify-between p-2.5 rounded" style={{ background: 'var(--color-surface-high)', border: '1px solid var(--color-border)' }}>
                   <span className="text-xs font-semibold" style={{ fontFamily: 'JetBrains Mono, monospace', color: '#F59E0B' }}>{cap}</span>
@@ -101,7 +101,7 @@ export default function DNAPage() {
           <div className="section-label mb-4">GEOGRAPHY & OZ STATUS</div>
           <div className="space-y-3 mb-4">
             {geographies.map(geo => {
-              const geoDeal = mockDeals.find(d => d.dna.geography === geo)
+              const geoDeal = deals.find(d => d.dna.geography === geo)
               return (
                 <div key={geo} className="flex items-center justify-between p-2.5 rounded" style={{ background: 'var(--color-surface-high)', border: '1px solid var(--color-border)' }}>
                   <div>
@@ -120,10 +120,10 @@ export default function DNAPage() {
           </div>
           <div className="p-3 rounded" style={{ background: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.2)' }}>
             <div className="text-xs font-bold mb-1" style={{ color: '#10B981', fontFamily: 'JetBrains Mono, monospace' }}>
-              OZ ELIGIBLE: {ozDeals.length}/{mockDeals.length} DEALS
+              OZ ELIGIBLE: {ozDeals.length}/{deals.length} DEALS
             </div>
             <div className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
-              {Math.round(ozDeals.length / mockDeals.length * 100)}% of pipeline qualifies for Opportunity Zone equity premium
+              {Math.round(ozDeals.length / deals.length * 100)}% of pipeline qualifies for Opportunity Zone equity premium
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function DNAPage() {
               </tr>
             </thead>
             <tbody>
-              {mockDeals.map(deal => (
+              {deals.map(deal => (
                 <tr key={deal.id} className="hover:bg-white/3 transition-colors" style={{ borderBottom: '1px solid var(--color-border)' }}>
                   <td className="px-4 py-3">
                     <Link href={`/vault/${deal.id}`} className="text-sm font-semibold hover:underline" style={{ fontFamily: 'Syne, sans-serif', color: 'var(--color-text-primary)' }}>

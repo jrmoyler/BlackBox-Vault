@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Layout from '@/components/Layout'
 import DealCard from '@/components/DealCard'
-import { mockDeals } from '@/lib/data'
+import { deals } from '@/lib/data'
 import { Search, Filter, SlidersHorizontal } from 'lucide-react'
 import { typeLabel, stageLabel } from '@/lib/utils'
 import type { ProjectStage, ProjectType } from '@/types'
@@ -30,7 +30,7 @@ export default function VaultPage() {
   const [typeFilter, setTypeFilter] = useState<ProjectType | 'all'>('all')
   const [sortBy, setSortBy] = useState<'score' | 'capital' | 'date'>('score')
 
-  const filtered = mockDeals
+  const filtered = deals
     .filter(d => {
       const q = query.toLowerCase()
       if (q && !d.projectName.toLowerCase().includes(q) && !d.location.toLowerCase().includes(q) && !d.sponsor.toLowerCase().includes(q)) return false
@@ -49,10 +49,10 @@ export default function VaultPage() {
       {/* Vault stats bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         {[
-          { label: 'INDEXED DEALS', value: mockDeals.length, color: '#00D4FF' },
-          { label: 'TOTAL DOCUMENTS', value: mockDeals.reduce((s, d) => s + d.documents.length, 0), color: '#F59E0B' },
-          { label: 'PROCESSED DOCS', value: mockDeals.reduce((s, d) => s + d.documents.filter(doc => doc.processed).length, 0), color: '#10B981' },
-          { label: 'CORRELATIONS', value: mockDeals.reduce((s, d) => s + d.correlations.length, 0), color: '#A78BFA' },
+          { label: 'INDEXED DEALS', value: deals.length, color: '#00D4FF' },
+          { label: 'TOTAL DOCUMENTS', value: deals.reduce((s, d) => s + d.documents.length, 0), color: '#F59E0B' },
+          { label: 'PROCESSED DOCS', value: deals.reduce((s, d) => s + d.documents.filter(doc => doc.processed).length, 0), color: '#10B981' },
+          { label: 'CORRELATIONS', value: deals.reduce((s, d) => s + d.correlations.length, 0), color: '#A78BFA' },
         ].map(item => (
           <div key={item.label} className="rounded-lg px-4 py-3" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
             <div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)', fontFamily: 'JetBrains Mono, monospace', fontSize: 9 }}>
